@@ -2,3 +2,49 @@
   text-align: center;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: .2rem;
+  padding: .3rem .5rem ;
+  background-color: rgb(4, 111, 177);
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+.contact-list {
+  width: 90%;
+  margin: 0 auto;
+
+  border-collapse: collapse;
+}
+
+.contact-list th, .contact-list td {
+  border: 1px solid grey;
+}
+
+.contact-list thead th {
+  text-align: left;
+  background-color: limegreen;
+
+  padding: .2rem;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 3rem auto 0;
+
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+
+ input {
+  width: 100%;
+}
