@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 
 export default function Home(props) {
     const { page, data, tags, del, edit } = props;
-
     const [list, setList ] = useState(data)
 
-
+    //grouping contacts by tag names
     const handleGroup = (e) => {
         const g = e.target.value;
         
@@ -17,10 +16,12 @@ export default function Home(props) {
         }  
     }
 
+    //remove deleted contact from UI & database
     const remove = (i) => {
+        //from UI
         const newData = list.filter(itm => itm.id !== i)
         setList(newData)
-
+        //from Database
         del(i)
     }
 
@@ -61,6 +62,7 @@ export default function Home(props) {
     )
 }
 
+//Table row component for Table body
 function Row(props) {
     const { cont, id, action, edit  } = props;
     const { name, email, phone } = cont;

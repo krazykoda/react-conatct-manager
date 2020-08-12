@@ -1,46 +1,63 @@
 import React, { useState } from "react"
-import Home from './components/Home'
-import Add from './components/Add'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 
-  
-const the = "hello"
-let hello= ""
-
-function Main() {
-    const [contacts, setContacts] = useState('');
-    const [tags, setTags] = useState([]);
-
-    
-    const handleSubmit = () => {
-        hello = 'world';
-        setContacts('hello')
-      }
-
+/* 
+    How to pass down props when using react router
+*/
+export default function Main() {
+    const [contact, setContact] = useState(['name','name2','name3'])
 
     return (
-        <Home data={hello} />
-    )
-
-    
+        <Router>
+            <Route path="/home" render={() => <Home v={contact} />} exact />
+            <Route path="/add" render={()=> <Add v="Add Page" />} exact />
+        </Router>
+    )  
 }
 
 
+function Home(props) {
 
+    return (
+        <div  style={styles}>
+            <h1>Contact Page </h1>
 
+            <ul>
+                {props.v.map((itm, i) => <li key={i}  > {itm} </li>)}
+            </ul>
 
-// export const home = () => (
-//     <Home 
-//         data={hello}
-    
-//     />
-// ) 
+            <Link to='/add'>
+                <button>Add</button>
+            </Link>
+        </div>
+    )
+}
 
-// export function add() {
-//     return (
-//         <Add 
-//             submit={handleSubmit}
-//         />
-//     )
-// }
+function Add(props) {
+
+    const [name, setName] = useState('')
+
+    return (
+        <div  style={styles}>
+        <h1>This is the {props.v} </h1>
+
+        <form>
+            <input type="text" placeholder="enter name" value={name} />
+            <button type="submit">Save</button>
+        </form>
+
+        <Link to='/home'>
+            <button>Home</button>
+        </Link>
+        </div>
+    )
+}
+
+const styles = {
+    textAlign: 'center',
+    width: '500px',
+    margin: '0 auto'
+}
+
 

@@ -17,7 +17,7 @@ export default function Add(props) {
         }
     }, [])
     
-
+    
     const save = (e) => {
         e.preventDefault()
         const data = {
@@ -31,6 +31,7 @@ export default function Add(props) {
         page()
     }
 
+    //Close add/update page && clear edit data if any
     function cancel() {
         page()
         clear()
@@ -45,14 +46,17 @@ export default function Add(props) {
                    <label htmlFor="name">Name:</label><br/>
                    <input type="text" name="name" id="name" value={name} onChange={(e)=> setName(e.target.value)} required />
                </div>
+
                <div className="field" >
                    <label htmlFor="email">Email: </label><br/>
                    <input type="email" name="email" id="email" value={email} onChange={(e)=> setEmail(e.target.value) } required />
                </div>
+
                <div className="field" >
                    <label htmlFor="phone-number">Phone Number:</label><br/>
                    <input type="number" name="phone-number" id="phone-number" value={phone} onChange={(e)=> setPhone(e.target.value) } required />
                </div>
+
                <div className="field" >
                    <label htmlFor="tag">Tag:</label><br/>
                    <input type="text" list="group" name="tag" id="tag" value={tag} onChange={(e)=> setTag(e.target.value)} required/>
@@ -62,9 +66,8 @@ export default function Add(props) {
                     </datalist>
                </div>
 
-        
-                <button type="submit">Save</button> 
-                <button onClick={cancel}>Cancel</button>
+               <button type="submit">Save</button> 
+               <button onClick={cancel}>Cancel</button>
            </form>
         </div>
     )

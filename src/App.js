@@ -1,7 +1,6 @@
 import React, {useState } from 'react';
 import './App.css';
-// import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './components/Home'
+import Home from './components/Home';
 import Add from './components/Add';
 
 
@@ -29,13 +28,12 @@ function App() {
       setContacts(newdata)
 
       editData = null
-
     }else {
       setContacts([...contacts, d])
-    
+
+      //check if tag already exist && add to tag list if not 
       const t = d.tag.toLowerCase();
       const f = tags.find(itm => itm === t)
-    
       if(!f) setTags([...tags, t])
     }
     
@@ -74,7 +72,6 @@ function App() {
                   edit = {editData}
                   clear = {clearEdit}
                 />
-
 }
 
 export default App;
