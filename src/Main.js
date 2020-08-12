@@ -43,7 +43,7 @@ function Add(props) {
         <h1>This is the {props.v} </h1>
 
         <form>
-            <input type="text" placeholder="enter name" value={name} />
+            <input type="text" placeholder="enter name" value={name} onChange={e => setName(e.target.value)} />
             <button type="submit">Save</button>
         </form>
 
