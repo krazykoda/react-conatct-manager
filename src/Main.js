@@ -14,7 +14,7 @@ export default function Main() {
 
     return (
         <Router>
-            <Route path="/home" render={() => <Home v={contact} />} exact />
+            <Route path="/" render={() => <Home v={contact} />} exact />
             <Route path="/add" render={()=> <Add v="Add Page" s={save} />} exact />
         </Router>
     )  
@@ -39,7 +39,6 @@ function Home(props) {
 }
 
 function Add(props) {
-
     const [name, setName] = useState('')
 
     function handleSave(e) {

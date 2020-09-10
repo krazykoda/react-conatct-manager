@@ -1,37 +1,26 @@
 import React, { useState } from 'react';
-import { connect } from "react-redux";
-import action from "../store/action";
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import action from "../store/action";
 
-function Add(props) {
-    const [contact, setContact] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        tag: ""   
-    })
+function Edit(props) {
+    const { contact, tags, dispatch, history } = props
     
-    const {  tags, dispatch, history } = props
+    const [updated, setUpdated] = useState(contact)
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setContact({
-           ...contact,
+        setUpdated({
+           ...updated,
            [name]: value 
         })
     }
     
-    
     const save = (e) => {
         e.preventDefault()
 
-        const data = {
-            id: Date.now(),
-            ...contact
-        }
-
-        dispatch("addContact",data);
-        history.push("/");
+        dispatch("editUser", updated);
+        history.push("/")
     }
 
 
@@ -46,8 +35,8 @@ function Add(props) {
                         type="text" 
                         name="name" 
                         id="name" 
-                        value={contact.name} 
-                        onChange={handleChange} 
+                        value={updated.name} 
+                        onChange={ handleChange } 
                         required 
                     />
                </div>
@@ -58,7 +47,7 @@ function Add(props) {
                         type="email" 
                         name="email" 
                         id="email" 
-                        value={contact.email} 
+                        value={updated.email} 
                         onChange={ handleChange } 
                         required 
                     />
@@ -70,7 +59,7 @@ function Add(props) {
                         type="number" 
                         name="phone" 
                         id="phone-number" 
-                        value={contact.phone} 
+                        value={updated.phone} 
                         onChange={ handleChange } 
                         required 
                     />
@@ -81,8 +70,9 @@ function Add(props) {
                    <input 
                         type="text" 
                         list="group" 
-                        name="tag" id="tag" 
-                        value={contact.tag} 
+                        name="tag" 
+                        id="tag" 
+                        value={updated.tag} 
                         onChange={ handleChange } 
                         required
                     />
@@ -93,18 +83,17 @@ function Add(props) {
                </div>
 
                <button type="submit">Save</button> 
-               <Link to="/">
-                    <button>Cancel</button>
-               </Link>
-               
+               <Link to="/"><button>Cancel</button></Link>
            </form>
         </div>
     )
 }
 
-const mapStateToProps = (state) => {
+
+const mapStateToProps = (state, ownProps) => {
     return {
-        tags: state.tags
+        tags: state.tags,
+        contact: state.contacts.find(itm => itm.id.toString() === ownProps.match.params.id)
     }
 }
 
@@ -112,5 +101,4 @@ const mapDispatchToProps = {
    dispatch : action
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Add);
+export default connect(mapStateToProps, mapDispatchToProps)(Edit);

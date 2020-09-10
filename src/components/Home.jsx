@@ -1,28 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import action from '../store/action';
 
-export default function Home(props) {
-    const { page, data, tags, del, edit } = props;
-    const [list, setList ] = useState(data)
+function Home(props) {
+    const { contacts, tags, dispatch  } = props;
+    const [list, setList ] = useState(contacts);
 
     //grouping contacts by tag names
     const handleGroup = (e) => {
         const g = e.target.value;
         
         if(g === 'all') {
-            setList(data)
+            setList(contacts)
         }else {
-            const newData = data.filter(el => el.tag.toLowerCase() === g);
+            const newData = contacts.filter(el => el.tag.toLowerCase() === g);
             setList(newData)
         }  
     }
 
     //remove deleted contact from UI & database
     const remove = (i) => {
-        //from UI
+        // //from UI
         const newData = list.filter(itm => itm.id !== i)
         setList(newData)
-        //from Database
-        del(i)
+        // //from Database
+        dispatch("deleteUser", i)
     }
 
 
@@ -37,9 +40,11 @@ export default function Home(props) {
                         {tags.map((el,i) => <option value={el} key={i}> {el} </option> )}
                     </select>
                 </div>
+
+                <Link to="/add">
+                    <button>Add New</button>
+                </Link>
                 
-                <button onClick={page} >Add New</button>
-    
             </nav>
 
 
@@ -54,7 +59,14 @@ export default function Home(props) {
                 </thead>
                     
                 <tbody>
-                    {list && list.map((itm)=> <Row key={itm.id} cont = {itm} id = {itm.id} action={remove} edit={edit} />)}    
+                    {list && list.map((itm)=> (
+                        <Row 
+                            key={itm.id} 
+                            cont = {itm} 
+                            id = {itm.id} 
+                            action={remove} 
+                        />
+                    ))}    
                 </tbody>
             </table>
 
@@ -64,7 +76,7 @@ export default function Home(props) {
 
 //Table row component for Table body
 function Row(props) {
-    const { cont, id, action, edit  } = props;
+    const { cont, id, action } = props;
     const { name, email, phone } = cont;
 
     return (
@@ -74,8 +86,22 @@ function Row(props) {
             <td> {phone} </td>
             <td >
                 <button onClick={() => action(id)} >Delete</button>
-                <button onClick={() => edit(id)} >Edit</button>
+                <Link to={`/edit/${id}`} ><button>Edit</button></Link>
             </td> 
         </tr>
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        contacts: state.contacts,
+        tags: state.tags
+    }
+}
+
+const mapDispatchToProps = {
+    dispatch: action
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
