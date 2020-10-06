@@ -30,6 +30,11 @@ const reducer = ( state=initialState, action) => {
                 contacts: state.contacts.map(itm => itm.id === payload.id? payload : itm)
             }
 
+        case "allContacts": 
+            const d = new Set()
+            d.add(payload.map(itm => itm.tag ))
+            return { contacts: payload, tags: [ ...d ] };
+            
         default:
             return state;
     }

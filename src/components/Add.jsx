@@ -30,7 +30,7 @@ function Add(props) {
             ...contact
         }
 
-        dispatch("addContact",data);
+        dispatch("add",data);
         history.push("/");
     }
 

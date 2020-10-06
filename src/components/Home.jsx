@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import action from '../store/action';
+import action, { getContacts } from '../store/action';
 
 function Home(props) {
-    const { contacts, tags, dispatch  } = props;
+    const { contacts, tags, dispatch, getContacts  } = props;
     const [list, setList ] = useState(contacts);
 
+    useEffect(() => {
+        getContacts()
+    }, [])
+
+
+   
     //grouping contacts by tag names
     const handleGroup = (e) => {
         const g = e.target.value;
@@ -25,7 +31,7 @@ function Home(props) {
         const newData = list.filter(itm => itm.id !== i)
         setList(newData)
         // //from Database
-        dispatch("deleteUser", i)
+        dispatch("delete", i)
     }
 
 
@@ -59,7 +65,7 @@ function Home(props) {
                 </thead>
                     
                 <tbody>
-                    {list && list.map((itm)=> (
+                    {contacts && contacts.map((itm)=> (
                         <Row 
                             key={itm.id} 
                             cont = {itm} 
@@ -101,7 +107,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    dispatch: action
+    dispatch: action,
+    getContacts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -19,7 +19,7 @@ function Edit(props) {
     const save = (e) => {
         e.preventDefault()
 
-        dispatch("editUser", updated);
+        dispatch("add", updated);
         history.push("/")
     }
 
