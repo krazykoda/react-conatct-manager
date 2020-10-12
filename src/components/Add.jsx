@@ -104,7 +104,7 @@ function Add(props) {
 
 const mapStateToProps = (state) => {
     return {
-        tags: state.tags
+        tags: state.contactState.tags
     }
 }
 
