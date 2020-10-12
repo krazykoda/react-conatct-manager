@@ -1,3 +1,6 @@
+import React from 'react'
+import { Redirect } from "react-router-dom";
+
 const action = (type, payload = {}) => {
 
   return (dispatch, state, { getFirestore }) => {
@@ -21,6 +24,17 @@ const action = (type, payload = {}) => {
   }
 };
 
+
+//logout user
+export const logout = () => {
+  return (dispatch, state, { getFirebase }) => {
+    getFirebase().auth().signOut()
+    .then(() => <Redirect to=".login" />)
+    .catch((err) => console.log(err))
+  }
+}
+
+
 //Get all users from firstore
 export const getContacts = () => {
   return (dispatch, state, { getFirestore }) => {
@@ -38,6 +52,7 @@ export const getContacts = () => {
       })
   }
 }
+
 
 
 export default action;

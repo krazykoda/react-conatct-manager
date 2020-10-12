@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import action, { getContacts } from '../store/action';
+import action, { getContacts, logout } from '../store/action';
 
 function Home(props) {
-    const { contacts, tags, dispatch, getContacts  } = props;
+    const { contacts, tags, dispatch, getContacts, logout  } = props;
     const [list, setList ] = useState(contacts);
 
     useEffect(() => {
         getContacts()
-    }, [])
+    }, [getContacts])
 
 
    
@@ -50,6 +50,10 @@ function Home(props) {
                 <Link to="/add">
                     <button>Add New</button>
                 </Link>
+
+                <button onClick={logout} >
+                    Logout
+                </button>
                 
             </nav>
 
@@ -101,14 +105,15 @@ function Row(props) {
 
 const mapStateToProps = (state) => {
     return {
-        contacts: state.contacts,
-        tags: state.tags
+        contacts: state.contactState.contacts,
+        tags: state.contactState.tags
     }
 }
 
 const mapDispatchToProps = {
     dispatch: action,
-    getContacts
+    getContacts,
+    logout,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

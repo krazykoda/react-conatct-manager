@@ -1,6 +1,6 @@
 const initialState = {
     contacts: [],
-    tags: []
+    tags: [],
 }
 
 const reducer = ( state=initialState, action) => {
